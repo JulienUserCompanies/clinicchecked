@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import { treatments } from '../../lib/data.mjs';
+---
+<Base title="Treatments" description="Registered clinics grouped by treatment: hair transplant, cosmetic surgery, and aesthetics and injectables.">
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / Treatments</p>
+    <h1>Treatments</h1>
+    <ul class="place-grid">
+      {treatments.map((t) => <li><a href={`/treatments/${t.slug}/`}><span>{t.name}</span><span class="n">{t.clinics.length}</span></a></li>)}
+    </ul>
+  </div>
+</Base>

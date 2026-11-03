@@ -1,0 +1,41 @@
+name: Weekly data refresh
+
+on:
+  schedule:
+    - cron: '17 5 * * 1' # Mondays 05:17 UTC, before the Claude weekly run
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['src/**', 'scripts/**', 'package*.json', 'astro.config.mjs']
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Refresh CQC registrations and ratings
+        if: github.event_name != 'push'
+        env:
+          CQC_API_KEY: ${{ secrets.CQC_API_KEY }}
+        run: npm run refresh-data
+      - name: Check data
+        run: npm run check-data
+      - name: Build
+        run: npm run build
+      - name: Commit refreshed data
+        if: github.event_name != 'push'
+        run: |
+          if git diff --quiet -- src/data; then echo "No data changes."; exit 0; fi
+          git config user.name "directory-bot"
+          git config user.email "directory-bot@users.noreply.github.com"
+          git add src/data
+          git commit -m "Weekly CQC data refresh"
+          git push

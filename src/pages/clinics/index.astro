@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import Register from '../../components/Register.astro';
+import Search from '../../components/Search.astro';
+import { clinics, treatments } from '../../lib/data.mjs';
+---
+<Base title="All clinics" description="Every hair transplant, cosmetic surgery and aesthetics clinic we list, with its regulator registration and latest inspection rating.">
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / All clinics</p>
+    <h1>All clinics</h1>
+    <p class="lede">Sorted by inspection rating, then name. Search by clinic, town or postcode.</p>
+    <Search target="all-clinics" count={clinics.length} />
+    <div class="filters" role="group" aria-label="Treatment" style="margin-top:1.25rem">
+      <a class="chip" href="/clinics/" aria-current="page">All treatments</a>
+      {treatments.map((t) => <a class="chip" href={`/treatments/${t.slug}/`}>{t.name}</a>)}
+    </div>
+    <Register items={clinics} id="all-clinics" />
+  </div>
+</Base>

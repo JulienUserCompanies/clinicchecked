@@ -1,0 +1,31 @@
+---
+import { site } from '../site.config.mjs';
+interface Props { clinic: any }
+const { clinic: c } = Astro.props;
+const reg = c.registrations?.[0];
+---
+{site.formEndpoint ? (
+  <form class="lead" method="post" action={site.formEndpoint}>
+    <input type="hidden" name="clinic" value={c.name} />
+    <input type="hidden" name="clinic_slug" value={c.slug} />
+    <label>Your name<input name="name" required autocomplete="name" /></label>
+    <label>Email<input name="email" type="email" required autocomplete="email" /></label>
+    <label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" /></label>
+    <label>Treatment you’re considering
+      <select name="treatment">
+        {site.treatments.map((t) => <option>{t.name}</option>)}
+        <option>Not sure yet</option>
+      </select>
+    </label>
+    <label class="consent"><input type="checkbox" name="consent" required /> <span>I agree to {site.name} passing my details to {c.name} so they can contact me. See our <a href="/privacy/">privacy notice</a>.</span></label>
+    <button class="button" type="submit">Send my request</button>
+    <p class="small muted" style="margin:0">Don’t include medical details here. Share those with the clinic directly.</p>
+  </form>
+) : (
+  <div>
+    <p class="small">Contact the clinic directly to book a consultation.</p>
+    {c.phone && <p><a class="button" href={`tel:${c.phone.replace(/\s/g, '')}`}>Call {c.phone}</a></p>}
+    {c.website && <p><a class="button secondary" href={c.website} rel="nofollow noopener" target="_blank">Visit the clinic’s website</a></p>}
+    {!c.phone && !c.website && reg?.url && <p><a class="button secondary" href={reg.url} rel="nofollow noopener" target="_blank">See contact details on the register</a></p>}
+  </div>
+)}

@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config.mjs';
+const who = site.operator || `the operator of ${site.name}`;
+---
+<Base title="Privacy" description={`How ${site.name} handles your personal information.`}>
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / Privacy</p>
+    <h1>Privacy notice</h1>
+    <div class="prose">
+      <p>This notice explains what {who} does with personal information collected through {site.name}.</p>
+      <h2>Browsing the site</h2>
+      <p>You can use the directory without giving us any personal information. We don’t use advertising cookies.</p>
+      <h2>Consultation requests</h2>
+      <p>If you send a consultation request, we collect your name, email address, optional phone number and the treatment you are considering. We use them only to pass your request to the clinic you chose, with your consent. Please don’t send medical details through the form.</p>
+      <p>We keep requests for up to 12 months so we can answer questions about them, then delete them.</p>
+      <h2>Your rights</h2>
+      <p>You can ask us for a copy of your information, ask us to correct or delete it, or withdraw your consent at any time{site.contactEmail ? <> by emailing <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></> : ''}. You can also complain to the Information Commissioner’s Office at ico.org.uk.</p>
+    </div>
+  </div>
+</Base>

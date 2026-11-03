@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import Register from '../../components/Register.astro';
+import { areas, primaryRegistration, treatments } from '../../lib/data.mjs';
+
+export function getStaticPaths() {
+  return areas.map((a) => ({ params: { area: a.slug }, props: { area: a } }));
+}
+const { area } = Astro.props;
+const top = area.clinics.filter((c) => ['Outstanding', 'Good'].includes(primaryRegistration(c)?.rating)).length;
+const here = treatments.map((t) => ({ ...t, n: area.clinics.filter((c) => c.treatments.includes(t.slug)).length })).filter((t) => t.n > 0);
+---
+<Base title={`Hair transplant and cosmetic clinics in ${area.name}`} description={`${area.clinics.length} registered clinics in ${area.name}, ${top} rated Good or Outstanding by their regulator. Compare registrations and inspection ratings.`}>
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/areas/">By area</a> / {area.name}</p>
+    <h1>Clinics in {area.name}</h1>
+    <p class="lede">{area.clinics.length} {area.clinics.length === 1 ? 'clinic' : 'clinics'} checked, {top} rated Good or Outstanding at their latest inspection.</p>
+    {here.length > 1 && (
+      <p class="small">Treatments here: {here.map((t, i) => <>{i > 0 && ', '}{t.name} ({t.n})</>)}</p>
+    )}
+    <Register items={area.clinics} />
+    <p class="small muted" style="margin-top:1rem">A rating applies to the clinic’s address, not to every branch of the same company. Open each report to see the inspection date and findings.</p>
+  </div>
+</Base>

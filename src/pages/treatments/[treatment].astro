@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import Register from '../../components/Register.astro';
+import Search from '../../components/Search.astro';
+import { treatments } from '../../lib/data.mjs';
+
+const intro = {
+  'hair-transplant': 'Hair transplant surgery in England must be carried out at a clinic registered with the Care Quality Commission. These are the clinics we have checked, best-rated first.',
+  'cosmetic-surgery': 'Cosmetic surgery is a regulated activity. In England the clinic must be registered with the Care Quality Commission for surgical procedures.',
+  aesthetics: 'Most non-surgical treatments such as fillers are not yet licensed in England. Clinics here are registered with a regulator or a practitioner register accredited by the Professional Standards Authority.',
+};
+
+export function getStaticPaths() {
+  return treatments.map((t) => ({ params: { treatment: t.slug }, props: { t } }));
+}
+const { t } = Astro.props;
+---
+<Base title={`${t.name} clinics`} description={`${t.clinics.length} ${t.plural} with their regulator registration and latest inspection rating.`}>
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/treatments/">Treatments</a> / {t.name}</p>
+    <h1>{t.name} clinics</h1>
+    <p class="lede">{intro[t.slug] ?? ''}</p>
+    <div class="filters" role="group" aria-label="Treatment">
+      <a class="chip" href="/clinics/">All treatments</a>
+      {treatments.map((x) => <a class="chip" href={`/treatments/${x.slug}/`} aria-current={x.slug === t.slug ? 'page' : undefined}>{x.name}</a>)}
+    </div>
+    {t.clinics.length > 0 && <Search target={`t-${t.slug}`} count={t.clinics.length} />}
+    <div style="margin-top:1rem"><Register items={t.clinics} id={`t-${t.slug}`} /></div>
+  </div>
+</Base>

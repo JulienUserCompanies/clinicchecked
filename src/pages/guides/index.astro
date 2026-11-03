@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { formatDate } from '../../lib/data.mjs';
+const guides = (await getCollection('guides', (g) => !g.data.draft)).sort((a, b) => +b.data.date - +a.data.date);
+---
+<Base title="Guides" description="Plain-English guides to choosing a safe, registered clinic for hair transplant, cosmetic surgery and aesthetic treatments.">
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / Guides</p>
+    <h1>Guides</h1>
+    <p class="lede">How to check a clinic, what to ask, and what the rules say.</p>
+    <ul class="guide-list">
+      {guides.map((g) => (
+        <li>
+          <a href={`/guides/${g.id}/`}>{g.data.title}</a>
+          <p>{g.data.description}</p>
+          <p class="small">{formatDate(g.data.updated ?? g.data.date)}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>

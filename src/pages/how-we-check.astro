@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config.mjs';
+---
+<Base title="How we check clinics" description="Where our clinic details come from, how often we check them, and what a regulator rating does and does not tell you.">
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / How we check</p>
+    <h1>How we check clinics</h1>
+    <div class="prose">
+      <p>Every clinic on {site.name} is matched to its record on a public register. We show what the register says, link to the full record, and note the date we last checked it.</p>
+      <h2>Where the details come from</h2>
+      <ul>
+        <li><strong>England:</strong> the Care Quality Commission (CQC) register. Clinics that carry out surgical procedures, including hair transplants and cosmetic surgery, must be registered with the CQC.</li>
+        <li><strong>Scotland, Wales and Northern Ireland:</strong> Healthcare Improvement Scotland, Healthcare Inspectorate Wales and the Regulation and Quality Improvement Authority.</li>
+        <li><strong>Non-surgical treatments:</strong> practitioner registers accredited by the Professional Standards Authority, such as the Joint Council for Cosmetic Practitioners and Save Face.</li>
+        <li><strong>Treatments and contact details:</strong> the regulator’s own report first, then the clinic’s website.</li>
+      </ul>
+      <h2>How often we check</h2>
+      <p>We refresh the register data every week. When a registration is cancelled or archived, the clinic comes off the main list.</p>
+      <h2>What a rating tells you</h2>
+      <p>A rating is the regulator’s view of one address at the time of its inspection. It covers safety, effectiveness, care, responsiveness and leadership. It does not rate the results of a procedure or any one surgeon, and an old rating may not reflect how the clinic runs today.</p>
+      <h2>What we never do</h2>
+      <ul>
+        <li>We don’t sell ratings, and paying for a featured listing doesn’t change what the register says.</li>
+        <li>We don’t publish reviews we can’t verify.</li>
+        <li>We don’t list a clinic that has no registration we can find for its address.</li>
+      </ul>
+      <p>Registration and rating details contain public sector information licensed under the Open Government Licence v3.0, from the Care Quality Commission. {site.name} is independent and is not part of the CQC or any other regulator.</p>
+    </div>
+  </div>
+</Base>

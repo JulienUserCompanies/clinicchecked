@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config.mjs';
+---
+<Base title="About" description={`About ${site.name}, an independent directory of registered private clinics.`}>
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / About</p>
+    <h1>About {site.name}</h1>
+    <div class="prose">
+      <p>Choosing a clinic for a hair transplant or cosmetic procedure usually means piecing together adverts, forum threads and regulator reports. {site.name} puts the part you can verify, the clinic’s registration and its latest inspection, next to every listing.</p>
+      <p>We are independent. We are not a regulator, we don’t give medical advice, and a listing is not a recommendation. Speak to a qualified clinician about whether a treatment is right for you.</p>
+      <p>We earn money from clearly labelled featured listings and from passing on consultation requests when you ask us to. Neither affects the registration details or ratings we show.</p>
+      {site.operator && <p>{site.name} is run by {site.operator}.</p>}
+    </div>
+  </div>
+</Base>

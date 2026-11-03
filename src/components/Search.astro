@@ -1,0 +1,32 @@
+---
+interface Props { target: string; label?: string; placeholder?: string; count: number }
+const { target, label = 'Search clinics', placeholder = 'Clinic name, town or postcode', count } = Astro.props;
+---
+<div class="search" data-search-for={target}>
+  <label for={`q-${target}`}>{label}</label>
+  <input id={`q-${target}`} type="search" placeholder={placeholder} autocomplete="off" />
+  <p class="hint small muted" aria-live="polite" data-search-count>{count} clinics listed</p>
+</div>
+<script>
+  for (const box of document.querySelectorAll<HTMLElement>('[data-search-for]')) {
+    const list = document.getElementById(box.dataset.searchFor!);
+    const input = box.querySelector('input')!;
+    const out = box.querySelector('[data-search-count]')!;
+    if (!list) continue;
+    const rows = [...list.querySelectorAll<HTMLElement>('li[data-text]')];
+    const total = rows.length;
+    const apply = () => {
+      const terms = input.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+      let shown = 0;
+      for (const r of rows) {
+        const ok = terms.every((t) => r.dataset.text!.includes(t));
+        r.hidden = !ok;
+        if (ok) shown++;
+      }
+      out.textContent = terms.length ? `${shown} of ${total} clinics match` : `${total} clinics listed`;
+    };
+    input.addEventListener('input', apply);
+    const q = new URLSearchParams(location.search).get('q');
+    if (q) { input.value = q; apply(); }
+  }
+</script>

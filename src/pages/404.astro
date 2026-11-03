@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Page not found" noindex>
+  <div class="wrap" style="padding-top:3rem">
+    <h1>This page isn’t here</h1>
+    <p class="lede">The clinic or guide may have moved. Search the register instead.</p>
+    <form action="/clinics/" method="get" class="search" role="search">
+      <label for="nf-q">Find a clinic</label>
+      <input id="nf-q" name="q" type="search" placeholder="Clinic name, town or postcode" />
+    </form>
+  </div>
+</Base>

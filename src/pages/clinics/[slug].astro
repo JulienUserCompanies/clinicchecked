@@ -1,0 +1,100 @@
+---
+import Base from '../../layouts/Base.astro';
+import Stamp from '../../components/Stamp.astro';
+import Register from '../../components/Register.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { site } from '../../site.config.mjs';
+import { clinics, primaryRegistration, treatmentName, formatDate, regulatorInfo, ratingAgeYears } from '../../lib/data.mjs';
+
+export function getStaticPaths() {
+  return clinics.map((c) => ({ params: { slug: c.slug }, props: { clinic: c } }));
+}
+const { clinic: c } = Astro.props;
+const reg = primaryRegistration(c);
+const age = reg?.ratingDate ? ratingAgeYears(reg.ratingDate) : null;
+const nearby = clinics.filter((x) => x.areaSlug === c.areaSlug && x.slug !== c.slug).slice(0, 5);
+const treatmentList = (c.treatments || []).map(treatmentName);
+const title = `${c.name}, ${c.city}`;
+const description = `${c.name} in ${c.city}: ${reg ? `${regulatorInfo(reg.regulator).short} registration ${reg.status.toLowerCase()}${reg.rating ? `, rated ${reg.rating}` : ''}` : 'registration details'}. ${treatmentList.join(', ')}.`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalClinic',
+  name: c.name,
+  url: new URL(`/clinics/${c.slug}/`, site.url).href,
+  address: { '@type': 'PostalAddress', streetAddress: c.address, addressLocality: c.city, postalCode: c.postcode, addressCountry: 'GB' },
+  ...(c.phone ? { telephone: c.phone } : {}),
+  ...(c.website ? { sameAs: [c.website] } : {}),
+  medicalSpecialty: 'PlasticSurgery',
+};
+---
+<Base title={title} description={description} jsonLd={jsonLd}>
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / <a href={`/areas/${c.areaSlug}/`}>{c.area || c.city}</a> / {c.name}</p>
+    <header class="clinic-head">
+      <div>
+        <h1>{c.name}</h1>
+        <p class="muted" style="margin:0">{c.address}, {c.city} {c.postcode}</p>
+      </div>
+      <Stamp reg={reg} size="lg" />
+    </header>
+
+    <div class="layout-2">
+      <div>
+        {age !== null && age > 3 && (
+          <p class="notice small">This rating is more than three years old. Ask the clinic whether anything has changed and read the latest report before you book.</p>
+        )}
+        <h2>Registration</h2>
+        {c.registrations.map((r) => (
+          <dl class="facts">
+            <dt>Regulator</dt><dd>{regulatorInfo(r.regulator).name}</dd>
+            <dt>Status</dt><dd><span class="highlight">{r.status}</span></dd>
+            <dt>Rating</dt><dd>{r.rating || 'Not yet rated'}{r.ratingDate ? `, published ${formatDate(r.ratingDate)}` : ''}</dd>
+            {r.id && <><dt>Register ID</dt><dd>{r.id}</dd></>}
+            {r.url && <><dt>Full record</dt><dd><a href={r.url} rel="nofollow noopener" target="_blank">Read the {regulatorInfo(r.regulator).short} report</a></dd></>}
+          </dl>
+        ))}
+
+        <h2>Treatments</h2>
+        <p>{c.services}</p>
+        <p class="small muted">Listed under: {treatmentList.join(', ')}.</p>
+
+        <h2>Contact</h2>
+        <dl class="facts">
+          <dt>Provider</dt><dd>{c.provider}</dd>
+          <dt>Address</dt><dd>{c.address}, {c.city} {c.postcode}</dd>
+          {c.phone && <><dt>Phone</dt><dd><a href={`tel:${c.phone.replace(/\s/g, '')}`}>{c.phone}</a></dd></>}
+          {c.website && <><dt>Website</dt><dd><a href={c.website} rel="nofollow noopener" target="_blank">{new URL(c.website).hostname}</a></dd></>}
+        </dl>
+
+        <p class="small muted">
+          Details from {c.sources.map((s, i) => <>{i > 0 && ', '}<a href={s} rel="nofollow noopener" target="_blank">{new URL(s).hostname}</a></>)}. Last checked {formatDate(c.checked)}.
+          Is something out of date? <a href="/for-clinics/">Tell us</a>.
+        </p>
+      </div>
+
+      <aside>
+        <div class="panel">
+          <h2>Ask about a consultation</h2>
+          <LeadForm clinic={c} />
+        </div>
+        <div class="panel">
+          <h2>Questions to ask</h2>
+          <ul class="small" style="padding-left:1.1rem;margin:0">
+            <li>Who will carry out my procedure, and what is their GMC number?</li>
+            <li>Which parts of the procedure will a technician do?</li>
+            <li>What does aftercare include, and who do I call if something goes wrong?</li>
+            <li>What is the total price, and what is the deposit’s refund policy?</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    {nearby.length > 0 && (
+      <section class="section">
+        <div class="section-head"><h2>Other clinics in {c.area || c.city}</h2><a href={`/areas/${c.areaSlug}/`}>See all</a></div>
+        <Register items={nearby} />
+      </section>
+    )}
+  </div>
+</Base>

@@ -1,0 +1,31 @@
+---
+import { primaryRegistration, treatmentName, formatDate, ratingClass, regulatorInfo } from '../lib/data.mjs';
+interface Props { items: any[]; id?: string; emptyText?: string }
+const { items, id, emptyText = 'No clinics listed here yet. New clinics are added every week.' } = Astro.props;
+---
+{items.length === 0 ? (
+  <p class="register empty-note muted">{emptyText}</p>
+) : (
+  <ul class="register" id={id}>
+    {items.map((c) => {
+      const reg = primaryRegistration(c);
+      const text = [c.name, c.provider, c.city, c.area, c.postcode, ...(c.treatments || []).map(treatmentName)].join(' ').toLowerCase();
+      return (
+        <li data-text={text}>
+          <a class="row" href={`/clinics/${c.slug}/`}>
+            <span class="row-name">
+              {c.name}
+              {c.provider && c.provider !== c.name && <span class="row-provider">{c.provider}</span>}
+            </span>
+            <span class="row-meta place">{c.city}{c.postcode ? `, ${c.postcode}` : ''}</span>
+            <span class="row-meta treat">{(c.treatments || []).map(treatmentName).join(', ')}</span>
+            <span class={`row-rating ${ratingClass(reg?.rating)}`}>
+              {reg?.rating || 'Not yet rated'}
+              {reg && <span>{regulatorInfo(reg.regulator).short}{reg.ratingDate ? `, ${formatDate(reg.ratingDate)}` : ''}</span>}
+            </span>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+)}

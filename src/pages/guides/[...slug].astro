@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import Register from '../../components/Register.astro';
+import { getCollection, render } from 'astro:content';
+import { site } from '../../site.config.mjs';
+import { clinics, formatDate } from '../../lib/data.mjs';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides', (g) => !g.data.draft);
+  return guides.map((g) => ({ params: { slug: g.id }, props: { g } }));
+}
+const { g } = Astro.props;
+const { Content } = await render(g);
+const related = clinics
+  .filter((c) => (!g.data.treatment || c.treatments.includes(g.data.treatment)) && (!g.data.area || c.areaSlug === g.data.area))
+  .slice(0, 5);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: g.data.title,
+  description: g.data.description,
+  datePublished: g.data.date.toISOString(),
+  dateModified: (g.data.updated ?? g.data.date).toISOString(),
+  publisher: { '@type': 'Organization', name: site.name },
+  mainEntityOfPage: new URL(`/guides/${g.id}/`, site.url).href,
+};
+---
+<Base title={g.data.title} description={g.data.description} jsonLd={jsonLd}>
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/guides/">Guides</a></p>
+    <article>
+      <h1 style="max-width:22ch">{g.data.title}</h1>
+      <p class="muted small">{g.data.updated ? `Updated ${formatDate(g.data.updated)}` : formatDate(g.data.date)}</p>
+      <div class="prose"><Content /></div>
+    </article>
+    {related.length > 0 && (
+      <section class="section">
+        <div class="section-head"><h2>Clinics we have checked</h2><a href="/clinics/">All clinics</a></div>
+        <Register items={related} />
+      </section>
+    )}
+  </div>
+</Base>

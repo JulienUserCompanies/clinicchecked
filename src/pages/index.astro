@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import Register from '../components/Register.astro';
+import Search from '../components/Search.astro';
+import Stamp from '../components/Stamp.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../site.config.mjs';
+import { clinics, areas, treatments, primaryRegistration, treatmentName, formatDate, regulatorInfo, lastChecked } from '../lib/data.mjs';
+
+const example = clinics.find((c) => primaryRegistration(c)?.rating === 'Outstanding') ?? clinics[0];
+const exReg = example ? primaryRegistration(example) : null;
+const guides = (await getCollection('guides')).sort((a, b) => +b.data.date - +a.data.date).slice(0, 4);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: site.url,
+  potentialAction: { '@type': 'SearchAction', target: `${site.url}/clinics/?q={query}`, 'query-input': 'required name=query' },
+};
+---
+<Base title={site.name} jsonLd={jsonLd}>
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <h1>Check a clinic is registered before you book.</h1>
+        <p class="lede">Hair transplant and cosmetic surgery clinics in the UK must be registered with a regulator. We show each clinic’s registration and latest inspection rating, so you can rule out the ones that aren’t.</p>
+        <form action="/clinics/" method="get" class="search" role="search">
+          <label for="home-q">Find a clinic</label>
+          <input id="home-q" name="q" type="search" placeholder="Clinic name, town or postcode" autocomplete="off" />
+          <p class="hint small muted">{clinics.length} clinics checked against the register, last updated {formatDate(lastChecked)}.</p>
+        </form>
+      </div>
+      {example && exReg && (
+        <article class="entry" aria-label="Example register entry">
+          <div class="entry-head">
+            <div>
+              <p class="entry-name"><a href={`/clinics/${example.slug}/`}>{example.name}</a></p>
+              <p class="entry-place">{example.city}, {example.postcode}</p>
+            </div>
+            <Stamp reg={exReg} size="lg" />
+          </div>
+          <dl>
+            <dt>Regulator</dt><dd>{regulatorInfo(exReg.regulator).name}</dd>
+            <dt>Registration</dt><dd>{exReg.status}</dd>
+            <dt>Provider</dt><dd>{example.provider}</dd>
+            <dt>Treatments</dt><dd>{example.treatments.map(treatmentName).join(', ')}</dd>
+          </dl>
+          <p class="entry-foot">Every listing shows where its details came from and the date we last checked them.</p>
+        </article>
+      )}
+    </section>
+
+    <section class="section" aria-labelledby="h-register">
+      <div class="section-head">
+        <h2 id="h-register">Clinics on the register</h2>
+        <a href="/clinics/">See all {clinics.length} clinics</a>
+      </div>
+      <Register items={clinics.slice(0, 8)} />
+    </section>
+
+    <section class="section" aria-labelledby="h-areas">
+      <div class="section-head"><h2 id="h-areas">Browse by area</h2></div>
+      <ul class="place-grid">
+        {areas.map((a) => (
+          <li><a href={`/areas/${a.slug}/`}><span>{a.name}</span><span class="n">{a.clinics.length}</span></a></li>
+        ))}
+        {treatments.map((t) => (
+          <li><a href={`/treatments/${t.slug}/`}><span>{t.name}</span><span class="n">{t.clinics.length}</span></a></li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="section" aria-labelledby="h-steps">
+      <div class="section-head"><h2 id="h-steps">Three checks before your consultation</h2></div>
+      <ol class="steps">
+        <li><h3>Find the registration</h3><p>Look the clinic up by its own address. A registration at another branch does not cover this one.</p></li>
+        <li><h3>Read the rating and its date</h3><p>A rating from several years ago tells you less. Open the latest report and read what inspectors found.</p></li>
+        <li><h3>Ask who does the surgery</h3><p>Ask for the surgeon’s name and check their GMC registration before you pay a deposit.</p></li>
+      </ol>
+      <p class="small"><a href="/how-we-check/">How we check every listing</a></p>
+    </section>
+
+    {guides.length > 0 && (
+      <section class="section" aria-labelledby="h-guides">
+        <div class="section-head"><h2 id="h-guides">Guides</h2><a href="/guides/">All guides</a></div>
+        <ul class="guide-list">
+          {guides.map((g) => (
+            <li><a href={`/guides/${g.id}/`}>{g.data.title}</a><p>{g.data.description}</p></li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
+</Base>

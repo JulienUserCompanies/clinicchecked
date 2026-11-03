@@ -1,0 +1,88 @@
+---
+import '../styles/global.css';
+import { site } from '../site.config.mjs';
+
+interface Props {
+  title: string;
+  description?: string;
+  jsonLd?: object | object[];
+  noindex?: boolean;
+}
+const { title, description = site.description, jsonLd, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const fullTitle = title === site.name ? `${site.name}: ${site.tagline}` : `${title} | ${site.name}`;
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/clinics/', label: 'Clinics' },
+  { href: '/areas/', label: 'By area' },
+  { href: '/guides/', label: 'Guides' },
+  { href: '/how-we-check/', label: 'How we check' },
+  { href: '/for-clinics/', label: 'For clinics' },
+];
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.name} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Public+Sans:wght@400;500;600;650;700;750;800&display=swap"
+      rel="stylesheet"
+    />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="/">
+          <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 13.5l4 4 8-9" fill="none" stroke="#233d7b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          {site.name}
+        </a>
+        <nav class="nav" aria-label="Main">
+          {nav.map((n) => <a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap cols">
+        <div>
+          <p><strong>{site.name}</strong> is an independent directory. We are not a regulator and are not part of the CQC or any other body we link to.</p>
+          <p>Registration and rating details contain public sector information licensed under the Open Government Licence v3.0, from the Care Quality Commission.</p>
+        </div>
+        <div>
+          <ul>
+            <li><a href="/clinics/">All clinics</a></li>
+            <li><a href="/areas/">Clinics by area</a></li>
+            <li><a href="/treatments/">Treatments</a></li>
+            <li><a href="/guides/">Guides</a></li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li><a href="/how-we-check/">How we check clinics</a></li>
+            <li><a href="/for-clinics/">List or update your clinic</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/privacy/">Privacy</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

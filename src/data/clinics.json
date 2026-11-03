@@ -1,0 +1,162 @@
+[
+  {
+    "slug": "farjo-hair-institute-manchester",
+    "name": "Farjo Hair Institute",
+    "provider": "Advanced Hair Technology Limited",
+    "treatments": ["hair-transplant"],
+    "services": "Hair transplant surgery using FUE and FUT, plus scalp, beard, sideburn, eyebrow and eyelash transplants and platelet-rich plasma therapy.",
+    "address": "70 Quay Street",
+    "city": "Manchester",
+    "area": "Greater Manchester",
+    "postcode": "M3 3EJ",
+    "country": "England",
+    "phone": "0161 237 3517",
+    "website": "",
+    "registrations": [
+      { "regulator": "CQC", "id": "1-645958490", "status": "Registered", "rating": "Outstanding", "ratingDate": "2025-11-21", "url": "https://www.cqc.org.uk/location/1-645958490" }
+    ],
+    "sources": ["https://www.cqc.org.uk/location/1-645958490/inspection-summary"],
+    "checked": "2026-11-03",
+    "featured": false
+  },
+  {
+    "slug": "crown-clinic-manchester",
+    "name": "Crown Clinic",
+    "provider": "Crown Clinic Limited",
+    "treatments": ["hair-transplant"],
+    "services": "Hair transplant surgery for scalp, beard, sideburns, eyebrows and eyelashes, and platelet-rich plasma therapy.",
+    "address": "Ground Floor, Global House, Bailey Lane, Manchester Airport",
+    "city": "Manchester",
+    "area": "Greater Manchester",
+    "postcode": "M90 4AB",
+    "country": "England",
+    "phone": "0161 437 4333",
+    "website": "",
+    "registrations": [
+      { "regulator": "CQC", "id": "1-2845745146", "status": "Registered", "rating": "Outstanding", "ratingDate": "2022-03-03", "url": "https://www.cqc.org.uk/location/1-2845745146" }
+    ],
+    "sources": ["https://www.cqc.org.uk/location/1-2845745146/inspection-summary"],
+    "checked": "2026-11-03",
+    "featured": false
+  },
+  {
+    "slug": "the-ksl-clinic-salford",
+    "name": "The KSL Clinic Manchester",
+    "provider": "The KSL Clinic Limited",
+    "treatments": ["hair-transplant"],
+    "services": "Hair transplant surgery (follicular unit excision) for scalp, beard, sideburns and eyebrows, plus platelet-rich plasma and scalp laser therapy.",
+    "address": "Unit 3, Waters Edge Business Park, Modwen Road",
+    "city": "Salford",
+    "area": "Greater Manchester",
+    "postcode": "M5 3EZ",
+    "country": "England",
+    "phone": "01622 686101",
+    "website": "",
+    "registrations": [
+      { "regulator": "CQC", "id": "1-5061446744", "status": "Registered", "rating": "Good", "ratingDate": "2022-09-22", "url": "https://www.cqc.org.uk/location/1-5061446744" }
+    ],
+    "sources": ["https://www.cqc.org.uk/location/1-5061446744/inspection-summary"],
+    "checked": "2026-11-03",
+    "featured": false
+  },
+  {
+    "slug": "medical-hair-restoration-clinic-altrincham",
+    "name": "Medical Hair Restoration Clinic (Manchester)",
+    "provider": "Medical Hair Restoration Clinic (Manchester) Limited",
+    "treatments": ["hair-transplant"],
+    "services": "Registered with CQC for surgical procedures. Check the treatments offered directly with the clinic.",
+    "address": "Unit 2 The Barn, Cherry Tree Farm, Cherry Tree Lane, Rostherne",
+    "city": "Altrincham",
+    "area": "Greater Manchester",
+    "postcode": "WA14 3RZ",
+    "country": "England",
+    "phone": "01565 745344",
+    "website": "",
+    "registrations": [
+      { "regulator": "CQC", "id": "1-9786070867", "status": "Registered", "rating": "Good", "ratingDate": "2022-09-22", "url": "https://www.cqc.org.uk/location/1-9786070867" }
+    ],
+    "sources": ["https://www.cqc.org.uk/location/1-9786070867"],
+    "checked": "2026-11-03",
+    "featured": false
+  },
+  {
+    "slug": "the-harley-street-hair-clinic-london",
+    "name": "The Harley Street Hair Clinic",
+    "provider": "The Harley Street Hair Clinic Limited",
+    "treatments": ["hair-transplant"],
+    "services": "Hair transplant surgery. Registered with CQC for surgical procedures since 2011.",
+    "address": "75 Wimpole Street",
+    "city": "London",
+    "area": "London",
+    "postcode": "W1G 9RT",
+    "country": "England",
+    "phone": "020 7177 2345",
+    "website": "",
+    "registrations": [
+      { "regulator": "CQC", "id": "1-2711073209", "status": "Registered", "rating": "Good", "ratingDate": "2022-11-01", "url": "https://www.cqc.org.uk/location/1-2711073209" }
+    ],
+    "sources": ["https://www.cqc.org.uk/location/1-2711073209/inspection-summary"],
+    "checked": "2026-11-03",
+    "featured": false
+  },
+  {
+    "slug": "vinci-hair-centre-london",
+    "name": "Vinci Hair Centre",
+    "provider": "Vinci Hair Centre Ltd",
+    "treatments": ["hair-transplant"],
+    "services": "Hair transplant surgery using follicular unit extraction.",
+    "address": "130 Harley Street",
+    "city": "London",
+    "area": "London",
+    "postcode": "W1G 7JU",
+    "country": "England",
+    "phone": "020 7486 2331",
+    "website": "",
+    "registrations": [
+      { "regulator": "CQC", "id": "1-122717634", "status": "Registered", "rating": "Good", "ratingDate": "2022-06-13", "url": "https://www.cqc.org.uk/location/1-122717634" }
+    ],
+    "sources": ["https://www.cqc.org.uk/location/1-122717634/inspection-summary"],
+    "checked": "2026-11-03",
+    "featured": false
+  },
+  {
+    "slug": "london-hair-transplant-clinic-edgware",
+    "name": "London Hair Transplant Clinic",
+    "provider": "London Hair Transplant Clinic Ltd",
+    "treatments": ["hair-transplant"],
+    "services": "Registered with CQC as an independent hospital offering surgical procedures.",
+    "address": "48a High Street, Edgware",
+    "city": "London",
+    "area": "London",
+    "postcode": "HA8 7EQ",
+    "country": "England",
+    "phone": "",
+    "website": "",
+    "registrations": [
+      { "regulator": "CQC", "id": "1-10959992841", "status": "Registered", "rating": "Requires improvement", "ratingDate": "2023-08-14", "url": "https://www.cqc.org.uk/location/1-10959992841" }
+    ],
+    "sources": ["https://www.cqc.org.uk/location/1-10959992841"],
+    "checked": "2026-11-03",
+    "featured": false
+  },
+  {
+    "slug": "the-private-clinic-london-central",
+    "name": "The Private Clinic London Central",
+    "provider": "TPC Group Limited",
+    "treatments": ["hair-transplant", "cosmetic-surgery"],
+    "services": "Cosmetic day surgery and hair transplant surgery for adults over 18. CQC notes the provider changed; the rating shown is from the previous provider.",
+    "address": "98 Harley Street, Marylebone",
+    "city": "London",
+    "area": "London",
+    "postcode": "W1G 7HZ",
+    "country": "England",
+    "phone": "020 8023 8587",
+    "website": "",
+    "registrations": [
+      { "regulator": "CQC", "id": "1-16518448404", "status": "Registered", "rating": "Good", "ratingDate": "2022-04-13", "url": "https://www.cqc.org.uk/location/1-16518448404" }
+    ],
+    "sources": ["https://www.cqc.org.uk/location/1-16518448404/inspection-summary"],
+    "checked": "2026-11-03",
+    "featured": false
+  }
+]

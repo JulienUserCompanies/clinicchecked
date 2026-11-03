@@ -1,0 +1,11 @@
+---
+import { ratingClass, regulatorInfo, formatDate } from '../lib/data.mjs';
+interface Props { reg: any; size?: 'lg' | 'md' }
+const { reg, size = 'md' } = Astro.props;
+const rating = reg?.rating || 'Not yet rated';
+const who = reg ? regulatorInfo(reg.regulator).short : '';
+---
+<span class={`stamp ${ratingClass(reg?.rating)} ${size === 'lg' ? 'lg' : ''}`}>
+  {rating}
+  {reg && <small>{who}{reg.ratingDate ? `, ${formatDate(reg.ratingDate)}` : ''}</small>}
+</span>

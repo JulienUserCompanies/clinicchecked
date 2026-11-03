@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import { areas } from '../../lib/data.mjs';
+---
+<Base title="Clinics by area" description="Find registered hair transplant and cosmetic surgery clinics by area, with each clinic’s inspection rating.">
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / By area</p>
+    <h1>Clinics by area</h1>
+    <p class="lede">Each area page lists every clinic we have checked there, best-rated first.</p>
+    <ul class="place-grid">
+      {areas.map((a) => <li><a href={`/areas/${a.slug}/`}><span>{a.name}</span><span class="n">{a.clinics.length}</span></a></li>)}
+    </ul>
+  </div>
+</Base>
