@@ -13,10 +13,10 @@ const canonical = new URL(Astro.url.pathname, site.url).href;
 const fullTitle = title === site.name ? `${site.name}: ${site.tagline}` : `${title} | ${site.name}`;
 const path = Astro.url.pathname;
 const nav = [
-  { href: '/clinics/', label: 'Clinics' },
+  { href: '/clinics/', label: 'Find a clinic' },
   { href: '/areas/', label: 'By area' },
-  { href: '/guides/', label: 'Guides' },
   { href: '/how-we-check/', label: 'How we check' },
+  { href: '/guides/', label: 'Guides' },
   { href: '/for-clinics/', label: 'For clinics' },
 ];
 ---
@@ -39,13 +39,14 @@ const nav = [
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Public+Sans:wght@400;500;600;650;700;750;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;500;600;650;700;750;800&display=swap"
       rel="stylesheet"
     />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
+    <div class="announce"><span class="tag">New</span><a href="/guides/non-surgical-cosmetic-licensing-england/">The new licensing rules for injectables in England, explained</a></div>
     <header class="site-header">
       <div class="wrap">
         <a class="wordmark" href="/">
@@ -55,6 +56,7 @@ const nav = [
         <nav class="nav" aria-label="Main">
           {nav.map((n) => <a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a>)}
         </nav>
+        <a class="hdr-cta" href="/clinics/">Compare clinics</a>
       </div>
     </header>
     <main id="main">
@@ -83,6 +85,7 @@ const nav = [
           </ul>
         </div>
       </div>
+      <div class="wrap"><p class="ftr-legal">{site.name} is run by {site.legal} Contact: <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></p></div>
     </footer>
   </body>
 </html>

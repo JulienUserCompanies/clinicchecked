@@ -10,9 +10,12 @@ export const site = {
   // Lead form: set FORM_ENDPOINT (e.g. a Formspree form URL) in the host's environment
   // variables to turn on enquiries. Until then, clinic pages link to the clinic's own site.
   formEndpoint: process.env.FORM_ENDPOINT || '',
-  contactEmail: process.env.CONTACT_EMAIL || '',
+  contactEmail: process.env.CONTACT_EMAIL || 'hello@usercompanies.com',
   // Legal name of whoever runs the site (needed for the privacy notice before enquiries go live).
-  operator: process.env.SITE_OPERATOR || '',
+  operator: process.env.SITE_OPERATOR || 'User Companies Ltd',
+  legal: 'User Companies Ltd, a private limited company incorporated in England, registered number 10069026, Crawley, UK.',
+  // Our own lead inbox (built next). Until it is on, lead forms fall back to search.
+  inbox: process.env.LEAD_INBOX === 'on',
   treatments: [
     { slug: 'hair-transplant', name: 'Hair transplant', plural: 'hair transplant clinics' },
     { slug: 'cosmetic-surgery', name: 'Cosmetic surgery', plural: 'cosmetic surgery clinics' },

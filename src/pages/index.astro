@@ -1,95 +1,177 @@
 ---
 import Base from '../layouts/Base.astro';
-import Register from '../components/Register.astro';
-import Search from '../components/Search.astro';
 import Stamp from '../components/Stamp.astro';
+import Register from '../components/Register.astro';
 import { getCollection } from 'astro:content';
 import { site } from '../site.config.mjs';
-import { clinics, areas, treatments, primaryRegistration, treatmentName, formatDate, regulatorInfo, lastChecked } from '../lib/data.mjs';
+import { clinics, areas, primaryRegistration, formatDate, regulatorInfo, lastChecked } from '../lib/data.mjs';
 
 const example = clinics.find((c) => primaryRegistration(c)?.rating === 'Outstanding') ?? clinics[0];
 const exReg = example ? primaryRegistration(example) : null;
-const guides = (await getCollection('guides')).sort((a, b) => +b.data.date - +a.data.date).slice(0, 4);
+const guides = (await getCollection('guides', (g) => !g.data.draft)).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
+const statutory = Object.values(site.regulators).filter((r) => r.country !== 'UK').length;
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: site.name,
-  url: site.url,
-  potentialAction: { '@type': 'SearchAction', target: `${site.url}/clinics/?q={query}`, 'query-input': 'required name=query' },
-};
+const faqs = [
+  { q: 'Does a clinic have to be registered?', a: 'In England, independent clinics that carry out cosmetic surgery, including hair transplants, must be registered with the Care Quality Commission. Our guide explains how to check.', href: '/guides/check-hair-transplant-clinic-registered/' },
+  { q: 'What does a rating cover?', a: 'A rating is the regulator’s view of one address at the time of its inspection. It does not rate the results of a procedure or any one surgeon.', href: '/how-we-check/' },
+  { q: 'Is it free to use?', a: 'Yes. Clinics can pay for clearly labelled featured listings; patients never pay, and nobody can pay to change a rating.' },
+  { q: 'Who sees my details?', a: 'Only the clinics you choose to contact. We never sell your details.' },
+];
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: site.url, potentialAction: { '@type': 'SearchAction', target: `${site.url}/clinics/?q={query}`, 'query-input': 'required name=query' } },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
 ---
 <Base title={site.name} jsonLd={jsonLd}>
   <div class="wrap">
-    <section class="hero">
+    <section class="hp-hero">
       <div>
-        <h1>Check a clinic is registered before you book.</h1>
-        <p class="lede">Hair transplant and cosmetic surgery clinics in the UK must be registered with a regulator. We show each clinic’s registration and latest inspection rating, so you can rule out the ones that aren’t.</p>
-        <form action="/clinics/" method="get" class="search" role="search">
-          <label for="home-q">Find a clinic</label>
-          <input id="home-q" name="q" type="search" placeholder="Clinic name, town or postcode" autocomplete="off" />
-          <p class="hint small muted">{clinics.length} clinics checked against the register, last updated {formatDate(lastChecked)}.</p>
-        </form>
-      </div>
-      {example && exReg && (
-        <article class="entry" aria-label="Example register entry">
-          <div class="entry-head">
-            <div>
-              <p class="entry-name"><a href={`/clinics/${example.slug}/`}>{example.name}</a></p>
-              <p class="entry-place">{example.city}, {example.postcode}</p>
-            </div>
-            <Stamp reg={exReg} size="lg" />
+        <h1 style="max-width:none">Choose the clinic.<br />Skip the risk.</h1>
+        <p class="lede">Every hair transplant and cosmetic clinic here is matched to its official register, with its latest inspection rating.</p>
+        <form class="finder" action="/clinics/" method="get" role="search">
+          <div class="modes" role="group" aria-label="Search by">
+            <button class="mode" type="button" aria-pressed="true" data-ph="Town, postcode or area">Find clinics near me</button>
+            <button class="mode" type="button" aria-pressed="false" data-ph="Clinic or company name">Check a clinic I found</button>
           </div>
-          <dl>
+          <div class="row">
+            <label for="hq" class="sr-only">Search</label>
+            <input id="hq" name="q" type="search" placeholder="Town, postcode or area" autocomplete="off" />
+            <button class="btn-accent" type="submit">Search</button>
+          </div>
+          <p class="hint">Hair transplant · Cosmetic surgery · Aesthetics</p>
+        </form>
+        <ul class="reassure"><li>Free for patients, always</li><li>Ratings straight from the regulator</li></ul>
+      </div>
+      <div class="hero-side">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 520 260" preserveAspectRatio="xMidYMid slice">
+            <rect width="520" height="260" fill="#d9e7e6"/>
+            <g fill="none" stroke="#0f4c5c" stroke-opacity=".12">{Array.from({ length: 14 }, (_, i) => <line x1={i * 40} y1="0" x2={i * 40} y2="260"/>)}{Array.from({ length: 7 }, (_, i) => <line x1="0" y1={i * 40} x2="520" y2={i * 40}/>)}</g>
+            <rect x="60" y="54" width="250" height="150" rx="14" fill="#fff" stroke="#c8d6d4"/>
+            <rect x="84" y="80" width="140" height="12" rx="6" fill="#0f4c5c" opacity=".85"/>
+            <rect x="84" y="104" width="190" height="8" rx="4" fill="#9fb4b3"/>
+            <rect x="84" y="122" width="160" height="8" rx="4" fill="#9fb4b3"/>
+            <rect x="84" y="140" width="176" height="8" rx="4" fill="#9fb4b3"/>
+            <rect x="84" y="166" width="96" height="20" rx="10" fill="#f2c14e"/>
+            <circle cx="400" cy="128" r="64" fill="#0f4c5c"/>
+            <path d="M372 130l20 20 38-42" fill="none" stroke="#f2c14e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        {example && exReg && (
+          <article class="sample" style="display:flex;gap:1rem;align-items:center;justify-content:space-between">
+            <div>
+              <p class="label">Sample listing</p>
+              <p class="name"><a href={`/clinics/${example.slug}/`}>{example.name}</a></p>
+              <p class="where">{example.city} · {regulatorInfo(exReg.regulator).short} {exReg.status.toLowerCase()}</p>
+            </div>
+            <Stamp reg={exReg} />
+          </article>
+        )}
+      </div>
+    </section>
+  </div>
+
+  <div class="stats-band">
+    <div class="wrap stats">
+      <div><p class="n">{clinics.length}</p><p>clinics checked against the register</p></div>
+      <div><p class="n">{statutory}</p><p>UK regulators covered: CQC, HIS, HIW, RQIA</p></div>
+      <div><p class="n">Weekly</p><p>listings re-checked, last on {formatDate(lastChecked)}</p></div>
+      <div><p class="n">£0</p><p>cost to you, and no account needed</p></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="section" style="padding-top:4rem" aria-labelledby="h-how">
+      <h2 id="h-how">From shortlist to consultation in three steps</h2>
+      <ol class="steps3">
+        <li><h3>Search your area</h3><p>See every registered clinic near you, sorted by its latest inspection rating.</p></li>
+        <li><h3>Compare clinics</h3><p>Registration, rating date, treatments and the provider behind the brand, side by side.</p></li>
+        <li><h3>Ask the right questions</h3><p>Every clinic page lists what to ask about the surgeon, aftercare and deposits before you book.</p></li>
+      </ol>
+    </section>
+
+    {example && exReg && (
+      <section class="section">
+        <div class="proof">
+          <div>
+            <p class="kicker">What every listing shows</p>
+            <h2>The facts adverts leave out</h2>
+            <p>Registration status, the rating and its date, the provider behind the brand, and a link to the full inspection report.</p>
+            <a class="btn-light" href={`/clinics/${example.slug}/`}>See a sample listing</a>
+          </div>
+          <dl class="card">
+            <dt>Clinic</dt><dd>{example.name}</dd>
             <dt>Regulator</dt><dd>{regulatorInfo(exReg.regulator).name}</dd>
-            <dt>Registration</dt><dd>{exReg.status}</dd>
+            <dt>Status</dt><dd><strong>{exReg.status}</strong></dd>
+            <dt>Rating</dt><dd>{exReg.rating}{exReg.ratingDate ? `, ${formatDate(exReg.ratingDate)}` : ''}</dd>
             <dt>Provider</dt><dd>{example.provider}</dd>
-            <dt>Treatments</dt><dd>{example.treatments.map(treatmentName).join(', ')}</dd>
+            <dt>Source</dt><dd><a href={exReg.url} rel="nofollow noopener" target="_blank">{new URL(exReg.url).hostname}</a>, checked {formatDate(example.checked)}</dd>
           </dl>
-          <p class="entry-foot">Every listing shows where its details came from and the date we last checked them.</p>
-        </article>
-      )}
+        </div>
+      </section>
+    )}
+
+    <section class="section" aria-labelledby="h-why">
+      <h2 id="h-why">Why people check here first</h2>
+      <div class="feat-grid">
+        <div><h3>Official data only</h3><p>Matched to the regulator’s register, not to the clinic’s own claims.</p></div>
+        <div><h3>Old ratings flagged</h3><p>A rating more than three years old carries a warning, so you know to ask.</p></div>
+        <div><h3>Questions to ask</h3><p>Every clinic page lists what to ask about the surgeon, aftercare and deposits.</p></div>
+        <div><h3>Independent</h3><p>Featured clinics are labelled, and nobody can pay to change a rating.</p></div>
+      </div>
     </section>
 
     <section class="section" aria-labelledby="h-register">
-      <div class="section-head">
-        <h2 id="h-register">Clinics on the register</h2>
-        <a href="/clinics/">See all {clinics.length} clinics</a>
+      <div class="section-head"><h2 id="h-register">Clinics on the register</h2><a href="/clinics/">See all {clinics.length}</a></div>
+      <Register items={clinics.slice(0, 6)} />
+    </section>
+
+    <section class="section" id="compare">
+      <div class="cta-band">
+        <div>
+          <h2>Find registered clinics near you</h2>
+          <p>{site.inbox ? 'Tell us your area and treatment. We send your request to up to three registered clinics you choose, and nowhere else.' : 'Pick a treatment and your area to see every registered clinic, with its latest rating.'}</p>
+        </div>
+        <form action="/clinics/" method="get">
+          <label>Treatment
+            <select name="t">{site.treatments.map((t) => <option value={t.name}>{t.name}</option>)}</select>
+          </label>
+          <label>Town or postcode<input name="q" autocomplete="address-level2" /></label>
+          <button class="btn-brand full" type="submit">{site.inbox ? 'Choose my clinics' : 'Show clinics'}</button>
+        </form>
       </div>
-      <Register items={clinics.slice(0, 8)} />
+    </section>
+
+    <section class="section two-col" aria-label="Guides and questions">
+      <div>
+        <div class="section-head"><h2>Guides</h2><a href="/guides/">All guides</a></div>
+        <ul class="guide-cards">
+          {guides.map((g) => <li><a href={`/guides/${g.id}/`}><span class="thumb" aria-hidden="true"></span><span><strong>{g.data.title}</strong><span class="d">{g.data.description}</span></span></a></li>)}
+        </ul>
+      </div>
+      <div class="faq">
+        <h2>Questions patients ask</h2>
+        {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a} {f.href && <a href={f.href}>Read more</a>}</p></details>)}
+      </div>
     </section>
 
     <section class="section" aria-labelledby="h-areas">
-      <div class="section-head"><h2 id="h-areas">Browse by area</h2></div>
+      <div class="section-head"><h2 id="h-areas">Browse by area</h2><a href="/areas/">All areas</a></div>
       <ul class="place-grid">
-        {areas.map((a) => (
-          <li><a href={`/areas/${a.slug}/`}><span>{a.name}</span><span class="n">{a.clinics.length}</span></a></li>
-        ))}
-        {treatments.map((t) => (
-          <li><a href={`/treatments/${t.slug}/`}><span>{t.name}</span><span class="n">{t.clinics.length}</span></a></li>
-        ))}
+        {areas.map((a) => <li><a href={`/areas/${a.slug}/`}><span>{a.name}</span><span class="n">{a.clinics.length}</span></a></li>)}
       </ul>
     </section>
-
-    <section class="section" aria-labelledby="h-steps">
-      <div class="section-head"><h2 id="h-steps">Three checks before your consultation</h2></div>
-      <ol class="steps">
-        <li><h3>Find the registration</h3><p>Look the clinic up by its own address. A registration at another branch does not cover this one.</p></li>
-        <li><h3>Read the rating and its date</h3><p>A rating from several years ago tells you less. Open the latest report and read what inspectors found.</p></li>
-        <li><h3>Ask who does the surgery</h3><p>Ask for the surgeon’s name and check their GMC registration before you pay a deposit.</p></li>
-      </ol>
-      <p class="small"><a href="/how-we-check/">How we check every listing</a></p>
-    </section>
-
-    {guides.length > 0 && (
-      <section class="section" aria-labelledby="h-guides">
-        <div class="section-head"><h2 id="h-guides">Guides</h2><a href="/guides/">All guides</a></div>
-        <ul class="guide-list">
-          {guides.map((g) => (
-            <li><a href={`/guides/${g.id}/`}>{g.data.title}</a><p>{g.data.description}</p></li>
-          ))}
-        </ul>
-      </section>
-    )}
   </div>
+
+  <script>
+    for (const f of document.querySelectorAll<HTMLFormElement>('.finder')) {
+      const input = f.querySelector('input')!;
+      const modes = [...f.querySelectorAll<HTMLButtonElement>('.mode')];
+      for (const m of modes) m.addEventListener('click', () => {
+        for (const o of modes) o.setAttribute('aria-pressed', String(o === m));
+        input.placeholder = m.dataset.ph || '';
+        input.focus();
+      });
+    }
+  </script>
 </Base>

@@ -26,7 +26,7 @@ const { target, label = 'Search clinics', placeholder = 'Clinic name, town or po
       out.textContent = terms.length ? `${shown} of ${total} clinics match` : `${total} clinics listed`;
     };
     input.addEventListener('input', apply);
-    const q = new URLSearchParams(location.search).get('q');
+    const sp = new URLSearchParams(location.search); const q = [sp.get('q'), sp.get('t')].filter(Boolean).join(' ');
     if (q) { input.value = q; apply(); }
   }
 </script>
