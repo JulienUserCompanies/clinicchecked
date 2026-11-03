@@ -14,8 +14,8 @@ export const site = {
   // Legal name of whoever runs the site (needed for the privacy notice before enquiries go live).
   operator: process.env.SITE_OPERATOR || 'User Companies Ltd',
   legal: 'User Companies Ltd, a private limited company incorporated in England, registered number 10069026, Crawley, UK.',
-  // Our own lead inbox (built next). Until it is on, lead forms fall back to search.
-  inbox: process.env.LEAD_INBOX === 'on',
+  // Our own lead inbox (worker/index.js + the shared D1 database). Set LEAD_INBOX=off to hide every lead form.
+  inbox: process.env.LEAD_INBOX !== 'off',
   treatments: [
     { slug: 'hair-transplant', name: 'Hair transplant', plural: 'hair transplant clinics' },
     { slug: 'cosmetic-surgery', name: 'Cosmetic surgery', plural: 'cosmetic surgery clinics' },

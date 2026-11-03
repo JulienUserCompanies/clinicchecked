@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Stamp from '../components/Stamp.astro';
 import Register from '../components/Register.astro';
+import LeadExtras from '../components/LeadExtras.astro';
+import Newsletter from '../components/Newsletter.astro';
 import { getCollection } from 'astro:content';
 import { site } from '../site.config.mjs';
 import { clinics, areas, primaryRegistration, formatDate, regulatorInfo, lastChecked } from '../lib/data.mjs';
@@ -130,15 +132,30 @@ const jsonLd = [
       <div class="cta-band">
         <div>
           <h2>Find registered clinics near you</h2>
-          <p>{site.inbox ? 'Tell us your area and treatment. We send your request to up to three registered clinics you choose, and nowhere else.' : 'Pick a treatment and your area to see every registered clinic, with its latest rating.'}</p>
+          <p>{site.inbox ? 'Tell us your area and treatment, and we’ll put you in touch with up to three registered clinics there. Your details go to them and nowhere else.' : 'Pick a treatment and your area to see every registered clinic, with its latest rating.'}</p>
         </div>
-        <form action="/clinics/" method="get">
-          <label>Treatment
-            <select name="t">{site.treatments.map((t) => <option value={t.name}>{t.name}</option>)}</select>
-          </label>
-          <label>Town or postcode<input name="q" autocomplete="address-level2" /></label>
-          <button class="btn-brand full" type="submit">{site.inbox ? 'Choose my clinics' : 'Show clinics'}</button>
-        </form>
+        {site.inbox ? (
+          <form action="/api/lead" method="post">
+            <LeadExtras kind="compare" />
+            <label>Treatment
+              <select name="treatment">{site.treatments.map((t) => <option>{t.name}</option>)}<option>Not sure yet</option></select>
+            </label>
+            <label>Town or postcode<input name="area" required autocomplete="address-level2" /></label>
+            <label>Your name<input name="name" required autocomplete="name" /></label>
+            <label>Email<input name="email" type="email" required autocomplete="email" /></label>
+            <label class="full">Phone (optional)<input name="phone" type="tel" autocomplete="tel" /></label>
+            <label class="full" style="display:flex;gap:.5rem;align-items:start;font-weight:400"><input type="checkbox" name="consent" required style="width:auto;flex:none;margin-top:.25rem" /> <span>I agree to {site.name} passing my details to up to three registered clinics so they can contact me. <a href="/privacy/">Privacy</a></span></label>
+            <button class="btn-brand full" type="submit">Find my clinics</button>
+          </form>
+        ) : (
+          <form action="/clinics/" method="get">
+            <label>Treatment
+              <select name="t">{site.treatments.map((t) => <option value={t.name}>{t.name}</option>)}</select>
+            </label>
+            <label>Town or postcode<input name="q" autocomplete="address-level2" /></label>
+            <button class="btn-brand full" type="submit">Show clinics</button>
+          </form>
+        )}
       </div>
     </section>
 
@@ -154,6 +171,8 @@ const jsonLd = [
         {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a} {f.href && <a href={f.href}>Read more</a>}</p></details>)}
       </div>
     </section>
+
+    <Newsletter title="Rating changes, in your inbox" text="A monthly email when clinics are re-rated or newly registered." topic="ratings" />
 
     <section class="section" aria-labelledby="h-areas">
       <div class="section-head"><h2 id="h-areas">Browse by area</h2><a href="/areas/">All areas</a></div>

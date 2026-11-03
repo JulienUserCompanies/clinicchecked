@@ -1,0 +1,12 @@
+---
+// Hidden fields every lead form sends to the inbox: the form type, what it is about,
+// the page it came from, and a honeypot field that people never see or fill.
+interface Props { kind: string; target?: string }
+const { kind, target = '' } = Astro.props;
+---
+<input type="hidden" name="kind" value={kind} />
+<input type="hidden" name="target" value={target} />
+<input type="hidden" name="page" value={Astro.url.pathname} />
+<div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden">
+  <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+</div>

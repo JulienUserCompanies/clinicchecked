@@ -1,13 +1,14 @@
 ---
 import { site } from '../site.config.mjs';
+import LeadExtras from './LeadExtras.astro';
 interface Props { clinic: any }
 const { clinic: c } = Astro.props;
 const reg = c.registrations?.[0];
 ---
-{site.formEndpoint ? (
-  <form class="lead" method="post" action={site.formEndpoint}>
+{site.inbox ? (
+  <form class="lead" method="post" action="/api/lead">
+    <LeadExtras kind="consultation" target={c.slug} />
     <input type="hidden" name="clinic" value={c.name} />
-    <input type="hidden" name="clinic_slug" value={c.slug} />
     <label>Your name<input name="name" required autocomplete="name" /></label>
     <label>Email<input name="email" type="email" required autocomplete="email" /></label>
     <label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" /></label>

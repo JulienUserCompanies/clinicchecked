@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site } from '../site.config.mjs';
+import ListingForm from '../components/ListingForm.astro';
 const mail = site.contactEmail;
 ---
 <Base title="For clinics" description={`Correct your clinic’s details or feature your listing on ${site.name}.`}>
@@ -14,8 +15,6 @@ const mail = site.contactEmail;
       <h2>Feature your clinic</h2>
       <p>A featured listing puts your clinic at the top of its area and treatment pages, adds your website and photos, and sends enquiries from people asking about a consultation straight to you. Featured listings are always labelled, and only clinics with a current registration can be featured.</p>
     </div>
-    <p style="margin-top:1.5rem">
-      {mail ? <a class="button" href={`mailto:${mail}?subject=${encodeURIComponent('Clinic listing')}`}>Email us about your listing</a> : <span class="muted">Contact details for clinics are coming soon.</span>}
-    </p>
+    <div style="margin-top:1.5rem"><ListingForm business="Clinic" button="Send to the ClinicChecked team" /></div>
   </div>
 </Base>

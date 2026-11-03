@@ -1,0 +1,20 @@
+---
+import { site } from '../site.config.mjs';
+import LeadExtras from './LeadExtras.astro';
+interface Props { title: string; text: string; topic?: string }
+const { title, text, topic = '' } = Astro.props;
+---
+{site.inbox && (
+  <section class="section">
+    <div class="newsletter">
+      <div><h2>{title}</h2><p>{text}</p></div>
+      <form method="post" action="/api/lead">
+        <LeadExtras kind="newsletter" target={topic} />
+        <label class="sr-only" for="nl-email">Email</label>
+        <input id="nl-email" name="email" type="email" required placeholder="Your email" autocomplete="email" />
+        <button class="btn-brand" type="submit">Sign up free</button>
+        <label class="small" style="flex-basis:100%;display:flex;gap:.5rem;align-items:start"><input type="checkbox" name="consent" required style="flex:none;margin-top:.2rem" /> <span>Send me the monthly email. Unsubscribe any time. <a href="/privacy/">Privacy</a></span></label>
+      </form>
+    </div>
+  </section>
+)}

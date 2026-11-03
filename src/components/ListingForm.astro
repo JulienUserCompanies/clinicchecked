@@ -1,0 +1,23 @@
+---
+import { site } from '../site.config.mjs';
+import LeadExtras from './LeadExtras.astro';
+interface Props { business: string; button?: string }
+const { business, button = 'Send' } = Astro.props;
+---
+{site.inbox ? (
+  <form class="lead panel" method="post" action="/api/lead" style="max-width:36rem">
+    <LeadExtras kind="listing" />
+    <label>{business} name<input name="business" required autocomplete="organization" /></label>
+    <label>Your name<input name="name" required autocomplete="name" /></label>
+    <label>Work email<input name="email" type="email" required autocomplete="email" /></label>
+    <label>Website<input name="business_website" type="url" placeholder="https://" /></label>
+    <label>What would you like to do?
+      <select name="request"><option>Feature my listing</option><option>Correct my details</option><option>Add my business</option><option>Something else</option></select>
+    </label>
+    <label>Message (optional)<textarea name="message" rows="3"></textarea></label>
+    <label class="consent"><input type="checkbox" name="consent" required /> <span>I agree to {site.name} contacting me about this request. See our <a href="/privacy/">privacy notice</a>.</span></label>
+    <button class="button" type="submit">{button}</button>
+  </form>
+) : (
+  <p><a class="button" href={`mailto:${site.contactEmail}?subject=${encodeURIComponent(`${site.name} listing`)}`}>Email us about your listing</a></p>
+)}

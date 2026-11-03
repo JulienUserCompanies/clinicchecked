@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config.mjs';
+---
+<Base title="Thank you" noindex>
+  <div class="wrap" style="padding-block:4rem 2rem;max-width:44rem">
+    <div data-msg="ok">
+      <p class="kicker">Request received</p>
+      <h1 style="font-size:var(--step-3)">Thank you. We’ve got your request.</h1>
+      <p class="lede" data-kind-text>We’ll pass your request on, and the clinic will contact you directly.</p>
+    </div>
+    <div data-msg="error" hidden>
+      <p class="kicker">Not sent yet</p>
+      <h1 style="font-size:var(--step-3)">Please check your details</h1>
+      <p class="lede" data-error-text>Something was missing from the form.</p>
+      <p><a class="btn-brand" href="javascript:history.back()">Go back to the form</a></p>
+    </div>
+    <p style="margin-top:2rem"><a href="/clinics/">Browse registered clinics</a> · <a href="/guides/">Read the guides</a></p>
+    <p class="small muted">Questions? Email <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.</p>
+  </div>
+  <script>
+    const p = new URLSearchParams(location.search);
+    const kind = p.get('k');
+    const err = p.get('e');
+    if (err) {
+      document.querySelector<HTMLElement>('[data-msg=ok]')!.hidden = true;
+      document.querySelector<HTMLElement>('[data-msg=error]')!.hidden = false;
+      document.querySelector('[data-error-text]')!.textContent = err === 'email' ? 'That email address doesn’t look right.' : 'Please tick the box to agree to us passing on your request.';
+    } else if (kind === 'newsletter') {
+      document.querySelector('[data-kind-text]')!.textContent = 'You’re on the list. Look out for the first email next month.';
+    } else if (kind === 'listing') {
+      document.querySelector('[data-kind-text]')!.textContent = 'We’ll check your details and reply by email within a week.';
+    }
+  </script>
+</Base>
