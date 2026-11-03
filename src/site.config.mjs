@@ -2,7 +2,7 @@
 export const site = {
   name: 'ClinicChecked',
   // Set SITE_URL in Cloudflare Pages to the live domain. Used for canonical URLs and the sitemap.
-  url: process.env.SITE_URL || 'https://clinicchecked.pages.dev',
+  url: process.env.SITE_URL || 'https://clinicchecked.com',
   tagline: 'Check a private clinic is registered before you book.',
   description:
     'An independent directory of hair transplant, cosmetic surgery and aesthetics clinics, with each clinic’s regulator registration and inspection rating in one place.',
