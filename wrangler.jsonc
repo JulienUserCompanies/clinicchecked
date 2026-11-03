@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers static site: serves the Astro build in dist/.
+  "name": "clinicchecked",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
