@@ -15,7 +15,7 @@ export const site = {
   operator: process.env.SITE_OPERATOR || 'User Companies Ltd',
   legal: 'User Companies Ltd, a private limited company incorporated in England, registered number 10069026, Crawley, UK.',
   // Our own lead inbox (worker/index.js + the shared D1 database). Set LEAD_INBOX=off to hide every lead form.
-  inbox: process.env.LEAD_INBOX === 'on', // switched on once the D1 database is connected
+  inbox: process.env.LEAD_INBOX !== 'off',
   treatments: [
     { slug: 'hair-transplant', name: 'Hair transplant', plural: 'hair transplant clinics' },
     { slug: 'cosmetic-surgery', name: 'Cosmetic surgery', plural: 'cosmetic surgery clinics' },

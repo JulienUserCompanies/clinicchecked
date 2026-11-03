@@ -1,9 +1,30 @@
 {
-  // Cloudflare Workers static site: serves the Astro build in dist/.
+  // Static site from dist/, plus the lead inbox Worker for /api/lead and /admin.
+  // The D1 database "leads" is shared by all three directory sites.
   "name": "clinicchecked",
+  "main": "./worker/index.js",
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": [
+      "/api/*",
+      "/admin",
+      "/admin/*"
+    ]
+  },
+  "vars": {
+    "SITE": "clinicchecked.com"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "leads",
+      "database_id": "f8cc096b-61e3-417d-8de3-9a4100d6da24"
+    }
+  ],
+  "observability": {
+    "enabled": true
   }
 }
