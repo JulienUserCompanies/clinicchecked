@@ -14,7 +14,8 @@ const reg = primaryRegistration(c);
 const age = reg?.ratingDate ? ratingAgeYears(reg.ratingDate) : null;
 const nearby = clinics.filter((x) => x.areaSlug === c.areaSlug && x.slug !== c.slug).slice(0, 5);
 const treatmentList = (c.treatments || []).map(treatmentName);
-const title = `${c.name}, ${c.city}`;
+const twin = clinics.some((x) => x.slug !== c.slug && x.name === c.name && x.city === c.city);
+const title = twin && c.postcode ? `${c.name}, ${c.city} ${c.postcode}` : `${c.name}, ${c.city}`;
 const description = `${c.name} in ${c.city}: ${reg ? `${regulatorInfo(reg.regulator).short} registration ${reg.status.toLowerCase()}${reg.rating ? `, rated ${reg.rating}` : ''}` : 'registration details'}. ${treatmentList.join(', ')}.`;
 
 const jsonLd = {

@@ -5,5 +5,5 @@ import { site } from './src/site.config.mjs';
 export default defineConfig({
   site: site.url,
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/thanks/') })],
 });
