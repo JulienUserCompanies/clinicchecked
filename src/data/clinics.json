@@ -902,5 +902,506 @@
     ],
     "checked": "2026-11-07",
     "featured": false
+  },
+  {
+    "slug": "samee-british-hair-clinic-brentwood",
+    "name": "Samee British Hair Clinic",
+    "provider": "Samee British Hair Clinic Ltd",
+    "treatments": [
+      "hair-transplant"
+    ],
+    "services": "Follicular unit extraction (FUE) hair transplants and platelet-rich plasma (PRP) injections for hair loss.",
+    "address": "First Floor, 208 Hutton Road, Shenfield",
+    "city": "Brentwood",
+    "area": "East of England",
+    "postcode": "CM15 8NR",
+    "country": "England",
+    "phone": "",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-3537677612",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2022-01-17",
+        "url": "https://www.cqc.org.uk/location/1-3537677612"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-3537677612/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "drmedispa-yourhairdoc-loughton",
+    "name": "DrMediSpa & Yourhairdoc",
+    "provider": "Priors Medical (Essex) Limited",
+    "treatments": [
+      "hair-transplant",
+      "aesthetics"
+    ],
+    "services": "Hair transplants (FUT and FUE), thread lifts and minor surgical procedures under local anaesthetic, plus cosmetic treatments CQC does not regulate.",
+    "address": "8 Forest Road",
+    "city": "Loughton",
+    "area": "East of England",
+    "postcode": "IG10 1DX",
+    "country": "England",
+    "phone": "",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-9736262415",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2022-09-27",
+        "url": "https://www.cqc.org.uk/location/1-9736262415"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-9736262415/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "my-cosmetic-centre-london",
+    "name": "My Cosmetic Centre",
+    "provider": "Dr Zakar Rafiq",
+    "treatments": [
+      "hair-transplant"
+    ],
+    "services": "Day-case follicular unit extraction hair transplants under local anaesthetic.",
+    "address": "44 Chippenham Road",
+    "city": "London",
+    "area": "London",
+    "postcode": "W9 2AF",
+    "country": "England",
+    "phone": "07958 435072",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-3773466267",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2023-02-08",
+        "url": "https://www.cqc.org.uk/location/1-3773466267"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-3773466267/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "evolve-medical-pudsey",
+    "name": "Evolve Medical",
+    "provider": "Farnell Aesthetics Limited",
+    "treatments": [
+      "cosmetic-surgery",
+      "aesthetics"
+    ],
+    "services": "Upper eyelid surgery, lip lift, mini facelift, ear pinning, labiaplasty and injectable slimming treatments.",
+    "address": "1 Priesthorpe Avenue, Stanningley",
+    "city": "Pudsey",
+    "area": "Yorkshire",
+    "postcode": "LS28 7TG",
+    "country": "England",
+    "phone": "07961 057457",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-8921050361",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2022-02-17",
+        "url": "https://www.cqc.org.uk/location/1-8921050361"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-8921050361/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "aventus-clinic-hitchin",
+    "name": "Aventus Clinic",
+    "provider": "Excel SA Limited",
+    "treatments": [
+      "hair-transplant"
+    ],
+    "services": "Follicular unit extraction (FUE) hair transplants for adults, plus cosmetic and dermatology services CQC did not inspect.",
+    "address": "4 Portmill House, Portmill Lane",
+    "city": "Hitchin",
+    "area": "East of England",
+    "postcode": "SG5 1DJ",
+    "country": "England",
+    "phone": "01462 512166",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-8102420732",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2022-07-20",
+        "url": "https://www.cqc.org.uk/location/1-8102420732"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-8102420732/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "the-hair-dr-beaconsfield",
+    "name": "The Hair Dr Beaconsfield",
+    "provider": "HA Medical Ltd",
+    "treatments": [
+      "hair-transplant"
+    ],
+    "services": "Surgical and non-surgical hair restoration, including FUE hair transplants and PRP therapy.",
+    "address": "51 London End",
+    "city": "Beaconsfield",
+    "area": "South East England",
+    "postcode": "HP9 2HW",
+    "country": "England",
+    "phone": "07508 308159",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-11896384093",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2023-03-31",
+        "url": "https://www.cqc.org.uk/location/1-11896384093"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-11896384093/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "manchester-private-hospital-salford",
+    "name": "Manchester Private Hospital",
+    "provider": "Arogya Connected Health LTD",
+    "treatments": [
+      "cosmetic-surgery"
+    ],
+    "services": "Cosmetic surgery including liposuction, breast augmentation, rhinoplasty and tummy tuck.",
+    "address": "New Court, Windsor Street",
+    "city": "Salford",
+    "area": "Greater Manchester",
+    "postcode": "M5 4HB",
+    "country": "England",
+    "phone": "0161 507 8822",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-8693094213",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2023-05-10",
+        "url": "https://www.cqc.org.uk/location/1-8693094213"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-8693094213/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "crosby-hospital-liverpool",
+    "name": "Crosby Hospital",
+    "provider": "Dr Promod Kumar Bhatnagar",
+    "treatments": [
+      "cosmetic-surgery"
+    ],
+    "services": "Cosmetic surgery including breast augmentation and reduction, eyelid surgery and liposuction.",
+    "address": "2 Park Road, Waterloo",
+    "city": "Liverpool",
+    "area": "Merseyside",
+    "postcode": "L22 3XF",
+    "country": "England",
+    "phone": "0151 949 9600",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-12465328452",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2023-12-08",
+        "url": "https://www.cqc.org.uk/location/1-12465328452"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-12465328452/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "city-clinics-group-london",
+    "name": "City Clinics Group",
+    "provider": "City Clinics Group Limited",
+    "treatments": [
+      "hair-transplant"
+    ],
+    "services": "Day-case follicular unit extraction hair transplants for adults under local anaesthetic. Its rating was given at a previous address.",
+    "address": "82 Harley Street",
+    "city": "London",
+    "area": "London",
+    "postcode": "W1G 7HN",
+    "country": "England",
+    "phone": "07454 005209",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-19883695288",
+        "status": "Registered",
+        "rating": "",
+        "ratingDate": "",
+        "url": "https://www.cqc.org.uk/location/1-19883695288"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-19883695288/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "hammersmith-private-hospital",
+    "name": "Hammersmith Private Hospital",
+    "provider": "Hammersmith Private Hospital Limited",
+    "treatments": [
+      "cosmetic-surgery",
+      "hair-transplant"
+    ],
+    "services": "Cosmetic surgery including breast augmentation, breast lift, hair transplant and liposuction. Its rating was given under a previous provider.",
+    "address": "The Triangle 5-17, Hammersmith Grove",
+    "city": "London",
+    "area": "London",
+    "postcode": "W6 0LG",
+    "country": "England",
+    "phone": "020 8563 8111",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-25236409705",
+        "status": "Registered",
+        "rating": "",
+        "ratingDate": "",
+        "url": "https://www.cqc.org.uk/location/1-25236409705"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-25236409705/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "manchester-aesthetics",
+    "name": "Manchester Aesthetics",
+    "provider": "Manchester Aesthetics Clinic Ltd",
+    "treatments": [
+      "aesthetics"
+    ],
+    "services": "Botox for excessive sweating and medical consultations, plus non-surgical cosmetic treatments CQC does not regulate.",
+    "address": "453 Lightbowne Road",
+    "city": "Manchester",
+    "area": "Greater Manchester",
+    "postcode": "M40 0HW",
+    "country": "England",
+    "phone": "0161 222 3890",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-11428640161",
+        "status": "Registered",
+        "rating": "Requires improvement",
+        "ratingDate": "2023-10-05",
+        "url": "https://www.cqc.org.uk/location/1-11428640161"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-11428640161/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "skin-doctor-manchester",
+    "name": "Skin Doctor Manchester",
+    "provider": "Ask Skin Ltd",
+    "treatments": [
+      "aesthetics"
+    ],
+    "services": "Botox for excessive sweating, rosacea treatment, skin tag removal and medical laser hair removal, plus non-surgical cosmetic treatments CQC does not regulate.",
+    "address": "40 Lapwing Lane, Didsbury",
+    "city": "Manchester",
+    "area": "Greater Manchester",
+    "postcode": "M20 2WR",
+    "country": "England",
+    "phone": "0161 434 4155",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-9894747015",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2022-07-07",
+        "url": "https://www.cqc.org.uk/location/1-9894747015"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-9894747015/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "dermoperfection-birmingham",
+    "name": "Dermoperfection Medical Skin & Cosmetic Clinic",
+    "provider": "Dermoperfection Cosmetic Services Limited",
+    "treatments": [
+      "aesthetics"
+    ],
+    "services": "Aesthetic treatments for adults, including thread lifts, skin lesion removal and treatment for excessive sweating.",
+    "address": "Unit 56, The Mailbox",
+    "city": "Birmingham",
+    "area": "West Midlands",
+    "postcode": "B1 1RE",
+    "country": "England",
+    "phone": "0121 439 4350",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-15069775248",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2023-10-04",
+        "url": "https://www.cqc.org.uk/location/1-15069775248"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-15069775248/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "al-aesthetics-solihull",
+    "name": "AL Aesthetics",
+    "provider": "AL Aesthetics Ltd",
+    "treatments": [
+      "aesthetics"
+    ],
+    "services": "Botox for migraines and excessive sweating, and minor surgery to remove moles, lipomas and skin tags.",
+    "address": "131 Union Road, Shirley",
+    "city": "Solihull",
+    "area": "West Midlands",
+    "postcode": "B90 3BZ",
+    "country": "England",
+    "phone": "0121 468 0813",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-9336270280",
+        "status": "Registered",
+        "rating": "Requires improvement",
+        "ratingDate": "2023-04-21",
+        "url": "https://www.cqc.org.uk/location/1-9336270280"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-9336270280/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "ministry-of-aesthetics-torquay",
+    "name": "Ministry of Aesthetics",
+    "provider": "BS Plastic Surgery Ltd",
+    "treatments": [
+      "cosmetic-surgery",
+      "aesthetics"
+    ],
+    "services": "Mole and skin tag removal and mini liposuction; other activities fall outside CQC's regulated scope.",
+    "address": "33 Newton Road",
+    "city": "Torquay",
+    "area": "South West England",
+    "postcode": "TQ2 5DB",
+    "country": "England",
+    "phone": "",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-11463858762",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2024-01-12",
+        "url": "https://www.cqc.org.uk/location/1-11463858762"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-11463858762/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
+  },
+  {
+    "slug": "centre-for-surgery-baker-street",
+    "name": "Centre for Surgery Baker Street",
+    "provider": "M Sarwar Limited",
+    "treatments": [
+      "cosmetic-surgery",
+      "hair-transplant"
+    ],
+    "services": "Facial plastic surgery, aesthetic breast surgery, body contouring, skin surgery, varicose vein treatment and hair transplant surgery.",
+    "address": "95-97 Baker Street",
+    "city": "London",
+    "area": "London",
+    "postcode": "W1U 6RN",
+    "country": "England",
+    "phone": "020 7993 4849",
+    "website": "",
+    "registrations": [
+      {
+        "regulator": "CQC",
+        "id": "1-12168174584",
+        "status": "Registered",
+        "rating": "Good",
+        "ratingDate": "2023-05-16",
+        "url": "https://www.cqc.org.uk/location/1-12168174584"
+      }
+    ],
+    "sources": [
+      "https://www.cqc.org.uk/location/1-12168174584/inspection-summary"
+    ],
+    "checked": "2026-11-07",
+    "featured": false
   }
 ]
