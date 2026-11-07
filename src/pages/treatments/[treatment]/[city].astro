@@ -1,0 +1,27 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Register from '../../../components/Register.astro';
+import { treatmentCities, citiesFor, primaryRegistration } from '../../../lib/data.mjs';
+
+export function getStaticPaths() {
+  return treatmentCities.map((x) => ({ params: { treatment: x.t.slug, city: x.city.slug }, props: x }));
+}
+const { t, city, clinics } = Astro.props;
+const rated = clinics.filter((c) => primaryRegistration(c)?.rating);
+const top = clinics.filter((c) => ['Outstanding', 'Good'].includes(primaryRegistration(c)?.rating)).length;
+const others = citiesFor(t.slug).filter((x) => x.city.slug !== city.slug).slice(0, 12);
+const label = t.name.toLowerCase();
+---
+<Base title={`${t.name} clinics in ${city.name}`} description={`${clinics.length} ${label} clinics in ${city.name} registered with the CQC, ${top} rated Good or Outstanding. Compare registrations and inspection ratings.`}>
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/treatments/">Treatments</a> / <a href={`/treatments/${t.slug}/`}>{t.name}</a> / {city.name}</p>
+    <h1>{t.name} clinics in {city.name}</h1>
+    <p class="lede">{clinics.length} {label} clinics in {city.name} on the regulator’s register. {rated.length} have an inspection rating, and {top} of those are rated Good or Outstanding.</p>
+    <Register items={clinics} />
+    <p class="small muted" style="margin-top:1rem">Ratings are the regulator’s latest overall rating for that address. Open each report to see when it was inspected and what was found. A listing here is not a recommendation.</p>
+    <p class="small">All clinics in <a href={`/cities/${city.slug}/`}>{city.name}</a>{city.area !== city.name && <> · <a href={`/areas/${city.areaSlug}/`}>{city.area}</a></>}</p>
+    {others.length > 0 && (
+      <p class="small">{t.name} in other cities: {others.map((x, i) => <>{i > 0 && ' · '}<a href={`/treatments/${t.slug}/${x.city.slug}/`}>{x.city.name}</a></>)}</p>
+    )}
+  </div>
+</Base>

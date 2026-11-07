@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import Register from '../../components/Register.astro';
+import { cities, treatmentCities, primaryRegistration } from '../../lib/data.mjs';
+
+export function getStaticPaths() {
+  return cities.map((city) => ({ params: { city: city.slug }, props: { city } }));
+}
+const { city } = Astro.props;
+const top = city.clinics.filter((c) => ['Outstanding', 'Good'].includes(primaryRegistration(c)?.rating)).length;
+const here = treatmentCities.filter((x) => x.city.slug === city.slug);
+---
+<Base title={`Cosmetic and hair transplant clinics in ${city.name}`} description={`${city.clinics.length} registered clinics in ${city.name}, ${top} rated Good or Outstanding by the CQC.`}>
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/cities/">Cities</a> / {city.name}</p>
+    <h1>Clinics in {city.name}</h1>
+    <p class="lede">{city.clinics.length} clinics in {city.name} on the regulator’s register, {top} rated Good or Outstanding at their latest inspection.</p>
+    {here.length > 0 && (
+      <div class="filters" role="group" aria-label="Treatment">
+        {here.map((x) => <a class="chip" href={`/treatments/${x.t.slug}/${city.slug}/`}>{x.t.name} ({x.clinics.length})</a>)}
+      </div>
+    )}
+    <div style="margin-top:1rem"><Register items={city.clinics} /></div>
+    <p class="small">Part of <a href={`/areas/${city.areaSlug}/`}>{city.area}</a>.</p>
+  </div>
+</Base>

@@ -50,3 +50,25 @@ export const ratingAgeYears = (iso) => {
 };
 
 export const lastChecked = clinics.reduce((m, c) => (c.checked > m ? c.checked : m), '');
+
+/** Pages only go live with at least this many listings. */
+export const MIN_LISTINGS = 3;
+
+export const cities = Object.values(
+  clinics.reduce((acc, c) => {
+    acc[c.citySlug] ??= { slug: c.citySlug, name: c.city, area: c.area, areaSlug: c.areaSlug, clinics: [] };
+    acc[c.citySlug].clinics.push(c);
+    return acc;
+  }, {}),
+)
+  .filter((x) => x.clinics.length >= MIN_LISTINGS)
+  .sort((a, b) => b.clinics.length - a.clinics.length || a.name.localeCompare(b.name));
+
+/** Treatment × city pages, e.g. /treatments/hair-transplant/london/ */
+export const treatmentCities = treatments.flatMap((t) =>
+  cities
+    .map((city) => ({ t, city, clinics: city.clinics.filter((c) => c.treatments?.includes(t.slug)) }))
+    .filter((x) => x.clinics.length >= MIN_LISTINGS),
+);
+
+export const citiesFor = (treatmentSlug) => treatmentCities.filter((x) => x.t.slug === treatmentSlug);

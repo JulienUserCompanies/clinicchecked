@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import { cities, MIN_LISTINGS } from '../../lib/data.mjs';
+---
+<Base title="Clinics by city" description="Registered hair transplant, cosmetic surgery and aesthetics clinics, by city.">
+  <div class="wrap">
+    <p class="crumbs"><a href="/">Home</a> / Cities</p>
+    <h1>Clinics by city</h1>
+    <p class="lede">Cities with at least {MIN_LISTINGS} registered clinics. For smaller towns, browse <a href="/areas/">by area</a>.</p>
+    <ul class="prose">
+      {cities.map((c) => <li><a href={`/cities/${c.slug}/`}>{c.name}</a> ({c.clinics.length})</li>)}
+    </ul>
+  </div>
+</Base>
