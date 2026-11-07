@@ -1,0 +1,64 @@
+---
+// Cookie consent for Microsoft Clarity. Clarity only loads after the visitor clicks "Accept".
+// The choice is kept in this browser (localStorage); "Cookie settings" in the footer reopens it.
+interface Props { clarityId: string }
+const { clarityId } = Astro.props;
+---
+<div class="consent" id="consent" role="region" aria-label="Cookie choice" hidden>
+  <p>We’d like to use analytics cookies (Microsoft Clarity) to see how people use this site so we can improve it. They’re off unless you accept. <a href="/privacy/">Privacy notice</a></p>
+  <div class="consent-actions">
+    <button type="button" class="consent-btn" data-consent="denied">Reject</button>
+    <button type="button" class="consent-btn" data-consent="granted">Accept</button>
+  </div>
+</div>
+<script is:inline define:vars={{ clarityId }}>
+  (function () {
+    var KEY = 'analytics-consent';
+    var box = document.getElementById('consent');
+    function read() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+    function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+    function loadClarity() {
+      if (window.__clarityLoaded) return;
+      window.__clarityLoaded = true;
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", clarityId);
+      window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
+    }
+    function choose(v) {
+      save(v);
+      box.hidden = true;
+      if (v === 'granted') loadClarity();
+      else if (window.__clarityLoaded && window.clarity) {
+        // Withdrawn: tell Clarity to stop and erase its cookies, then reload without it.
+        window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'denied' });
+        window.clarity('consent', false);
+        setTimeout(function () { location.reload(); }, 300);
+      }
+    }
+    var current = read();
+    if (current === 'granted') loadClarity();
+    else if (current !== 'denied') box.hidden = false;
+    box.addEventListener('click', function (e) {
+      var v = e.target && e.target.getAttribute && e.target.getAttribute('data-consent');
+      if (v) choose(v);
+    });
+    document.addEventListener('click', function (e) {
+      var t = e.target && e.target.closest && e.target.closest('[data-cookie-settings]');
+      if (t) { e.preventDefault(); box.hidden = false; box.querySelector('button').focus(); }
+    });
+  })();
+</script>
+<style>
+  .consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:50;max-width:640px;margin:0 auto;background:var(--surface,#fff);color:var(--ink,#111);border:1px solid var(--line,#ddd);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.14);padding:16px 18px;display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;font-size:15px;line-height:1.45}
+  .consent[hidden]{display:none}
+  .consent p{margin:0;flex:1 1 300px}
+  .consent a{color:var(--brand,#0f5b4d)}
+  .consent-actions{display:flex;gap:10px;flex:0 0 auto}
+  .consent-btn{font:inherit;font-weight:600;padding:9px 18px;border-radius:8px;border:1.5px solid var(--brand,#0f5b4d);background:var(--surface,#fff);color:var(--brand,#0f5b4d);cursor:pointer;min-width:96px}
+  .consent-btn:hover{background:var(--brand-soft,#eef)}
+  .consent-btn:focus-visible{outline:3px solid var(--brand,#0f5b4d);outline-offset:2px}
+  .cookie-link{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}
+</style>

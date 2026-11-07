@@ -1,4 +1,5 @@
 ---
+import Consent from '../components/Consent.astro';
 import '../styles/global.css';
 import { site } from '../site.config.mjs';
 
@@ -43,14 +44,6 @@ const nav = [
       rel="stylesheet"
     />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
-    <!-- Microsoft Clarity (site analytics) -->
-    <script is:inline type="text/javascript">
-      (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "za3g8wu91n");
-    </script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -91,10 +84,12 @@ const nav = [
             <li><a href="/for-clinics/">List or update your clinic</a></li>
             <li><a href="/about/">About</a></li>
             <li><a href="/privacy/">Privacy</a></li>
+            <li><button type="button" class="cookie-link" data-cookie-settings>Cookie settings</button></li>
           </ul>
         </div>
       </div>
       <div class="wrap"><p class="ftr-legal">{site.name} is run by {site.legal} Contact: <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></p></div>
     </footer>
+    <Consent clarityId="za3g8wu91n" />
   </body>
 </html>
