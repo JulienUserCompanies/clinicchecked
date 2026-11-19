@@ -4,6 +4,7 @@
 //   POST /api/lead   → saves a form submission, then redirects to /thanks/
 //   GET  /admin      → password-protected list of leads (all three sites, filterable)
 //   GET  /admin/export.csv, POST /admin/status, POST /admin/delete
+//   GET  /admin/leads.json, POST /admin/leads/drafted → for an automated drafting run
 //   GET  /admin/contacts → private enquiry emails for listed businesses (never published)
 //   POST /admin/contacts/import, /admin/contacts/save, /admin/contacts/delete
 //   everything else  → the static site (env.ASSETS)
@@ -61,6 +62,13 @@ let schemaReady = false;
 async function ensureSchema(db) {
   if (schemaReady) return;
   for (const sql of SCHEMA) await db.prepare(sql).run();
+  // drafted_at: set once an automated reply draft has been created for a lead, so the
+  // same lead doesn't get a second draft on a later run. Separate from `status`, which
+  // stays the human sales-pipeline field (new/sent/won/lost/spam).
+  const cols = ((await db.prepare('PRAGMA table_info(leads)').all()).results || []);
+  if (!cols.some((c) => c.name === 'drafted_at')) {
+    await db.prepare('ALTER TABLE leads ADD COLUMN drafted_at TEXT').run();
+  }
   schemaReady = true;
 }
 
@@ -277,6 +285,40 @@ async function adminExport(env, url) {
   return new Response(csv, { headers: { 'content-type': 'text/csv; charset=utf-8', 'content-disposition': 'attachment; filename="leads.csv"', 'cache-control': 'no-store' } });
 }
 
+// ---------- Leads API (for an automated drafting run, not a browser) ----------
+// GET  /admin/leads.json            → undrafted leads as JSON (add ?all=1 for every lead)
+// POST /admin/leads/drafted  id=123 → marks a lead as drafted, so it isn't returned again
+// Both reuse the same ADMIN_PASSWORD Basic-auth check as the rest of /admin.
+
+async function leadsJson(env, url) {
+  await ensureSchema(env.DB);
+  const f = await readFilters(url);
+  const all = url.searchParams.get('all') === '1';
+  const where = f.sql ? `${f.sql} AND drafted_at IS NULL` : 'WHERE drafted_at IS NULL';
+  const sql = `SELECT * FROM leads ${all ? f.sql : where} ORDER BY created_at ASC LIMIT 500`;
+  const rows = (await env.DB.prepare(sql).bind(...f.args).all()).results || [];
+  const leads = rows.map((r) => {
+    let details = {};
+    try { details = JSON.parse(r.details || '{}'); } catch {}
+    return { ...r, details };
+  });
+  return new Response(JSON.stringify({ leads }), { headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
+}
+
+async function markDrafted(req, env, url) {
+  const ct = req.headers.get('content-type') || '';
+  let id;
+  if (ct.includes('application/json')) {
+    id = Number((await req.json().catch(() => ({})))?.id);
+  } else if (ct.includes('application/x-www-form-urlencoded') || ct.includes('multipart/form-data')) {
+    id = Number((await req.formData()).get('id'));
+  }
+  if (!Number.isInteger(id) || id < 1) return new Response(JSON.stringify({ error: 'bad id' }), { status: 400, headers: { 'content-type': 'application/json' } });
+  await ensureSchema(env.DB);
+  await env.DB.prepare('UPDATE leads SET drafted_at = ? WHERE id = ?').bind(new Date().toISOString(), id).run();
+  return new Response(JSON.stringify({ ok: true, id }), { headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
+}
+
 async function adminWrite(req, env, url, action) {
   const ct = req.headers.get('content-type') || '';
   if (!ct.includes('application/x-www-form-urlencoded') && !ct.includes('multipart/form-data')) return new Response('Bad request', { status: 400 });
@@ -469,6 +511,8 @@ async function handleAdmin(req, env, url) {
   if (!env.DB) return new Response('The lead inbox database is not connected yet.', { status: 503 });
   if (req.method === 'GET' && (url.pathname === '/admin' || url.pathname === '/admin/')) return adminPage(env, url);
   if (req.method === 'GET' && url.pathname === '/admin/export.csv') return adminExport(env, url);
+  if (req.method === 'GET' && url.pathname === '/admin/leads.json') return leadsJson(env, url);
+  if (req.method === 'POST' && url.pathname === '/admin/leads/drafted') return markDrafted(req, env, url);
   if (req.method === 'POST' && url.pathname === '/admin/status') return adminWrite(req, env, url, 'status');
   if (req.method === 'POST' && url.pathname === '/admin/delete') return adminWrite(req, env, url, 'delete');
   if (req.method === 'GET' && url.pathname === '/admin/contacts') return contactsPage(env, url);
